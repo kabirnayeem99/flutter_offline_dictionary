@@ -18,16 +18,34 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text("search"),
+            icon: Icon(
+              Icons.history,
+              color: Style.orangeColor,
+            ),
+            title: Text(
+              "History",
+              style: TextStyle(
+                color: Style.orangeColor,
+              ),
+            ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text("search"),
+            icon: Icon(Icons.search, color: Style.redColor),
+            title: Text(
+              "Search",
+              style: TextStyle(
+                color: Style.redColor,
+              ),
+            ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text("search"),
+            icon: Icon(Icons.favorite, color: Style.greenColor),
+            title: Text(
+              "Favorites",
+              style: TextStyle(
+                color: Style.greenColor,
+              ),
+            ),
           ),
         ],
       ),
@@ -41,9 +59,11 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.all(16.0),
+                    Container(
+                      height: 200.0,
+                      margin: EdgeInsets.all(16.0),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
                         child: TextField(
                           autocorrect: true,
                           decoration: InputDecoration(
