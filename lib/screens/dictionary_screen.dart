@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline_dictionary/theme/style.dart';
 
@@ -10,48 +11,90 @@ class DictionaryScreen extends StatefulWidget {
 
 class _DictionaryScreenState extends State<DictionaryScreen> {
   PageController dictionaryScreenPageController;
+  int _page = 1;
+
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
+  void navigationTapped(int page) {
+    dictionaryScreenPageController.jumpToPage(page);
+  }
+
+  Color determinColorOfNavigationBarItem(int pageNumber) {
+    Color navigationBarColor;
+    if (pageNumber == 0) {
+      navigationBarColor = Style.orangeColor;
+    } else if (pageNumber == 1) {
+      navigationBarColor = Style.redColor;
+    } else if (pageNumber == 2) {
+      navigationBarColor = Style.greenColor;
+    } else {
+      navigationBarColor = Colors.black;
+    }
+    return navigationBarColor;
+  }
+
+  double determineFontAndIconSizeOfItem(int pageNumber, int tabIcon) {
+    double fontAndIconSize;
+    if (pageNumber == tabIcon) {
+      fontAndIconSize = 36.0;
+    } else {
+      fontAndIconSize = 28.0;
+    }
+    return fontAndIconSize;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dictionaryScreenPageController = PageController(initialPage: 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
+      bottomNavigationBar: CupertinoTabBar(
+        border: Border(
+          top: BorderSide.none,
+        ),
+        currentIndex: _page,
+        onTap: navigationTapped,
+        activeColor: Colors.black,
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.history,
-              color: Style.orangeColor,
-            ),
-            title: Text(
-              "History",
-              style: TextStyle(
-                color: Style.orangeColor,
-              ),
+              size: determineFontAndIconSizeOfItem(_page, 0),
+              color: determinColorOfNavigationBarItem(_page),
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Style.redColor),
-            title: Text(
-              "Search",
-              style: TextStyle(
-                color: Style.redColor,
-              ),
+            icon: Icon(
+              Icons.search,
+              color: determinColorOfNavigationBarItem(_page),
+              size: determineFontAndIconSizeOfItem(_page, 1),
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite, color: Style.greenColor),
-            title: Text(
-              "Favorites",
-              style: TextStyle(
-                color: Style.greenColor,
-              ),
+            icon: Icon(
+              Icons.favorite_border,
+              size: determineFontAndIconSizeOfItem(_page, 2),
+              color: determinColorOfNavigationBarItem(_page),
             ),
           ),
         ],
       ),
       body: PageView(
+        onPageChanged: onPageChanged,
         controller: dictionaryScreenPageController,
         children: [
+          Text(
+            "whdo",
+          ),
           Container(
             color: Style.redColor,
             child: Center(
