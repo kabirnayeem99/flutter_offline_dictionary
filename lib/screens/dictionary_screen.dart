@@ -23,7 +23,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     dictionaryScreenPageController.jumpToPage(page);
   }
 
-  Color determinColorOfNavigationBarItem(int pageNumber) {
+  Color _determinColorOfNavigationBarItem(int pageNumber) {
     Color navigationBarColor;
     if (pageNumber == 0) {
       navigationBarColor = Style.orangeColor;
@@ -37,7 +37,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     return navigationBarColor;
   }
 
-  double determineFontAndIconSizeOfItem(int pageNumber, int tabIcon) {
+  double _determineFontAndIconSizeOfItem(int pageNumber, int tabIcon) {
     double fontAndIconSize;
     if (pageNumber == tabIcon) {
       fontAndIconSize = 36.0;
@@ -56,6 +56,27 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Align(
+          alignment: Alignment.bottomCenter,
+          child: Hero(
+            transitionOnUserGestures: true,
+            tag: "title",
+            child: Text(
+              "Dictionary",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 22.0,
+              ),
+            ),
+          ),
+        ),
+        toolbarHeight: _page == 1 ? 0 : 50.0,
+        backgroundColor: _determinColorOfNavigationBarItem(_page),
+        elevation: _page == 1 ? 0.0 : 0.0,
+      ),
       bottomNavigationBar: CupertinoTabBar(
         border: Border(
           top: BorderSide.none,
@@ -68,22 +89,22 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.history,
-              size: determineFontAndIconSizeOfItem(_page, 0),
-              color: determinColorOfNavigationBarItem(_page),
+              size: _determineFontAndIconSizeOfItem(_page, 0),
+              color: _determinColorOfNavigationBarItem(_page),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.search,
-              color: determinColorOfNavigationBarItem(_page),
-              size: determineFontAndIconSizeOfItem(_page, 1),
+              color: _determinColorOfNavigationBarItem(_page),
+              size: _determineFontAndIconSizeOfItem(_page, 1),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite_border,
-              size: determineFontAndIconSizeOfItem(_page, 2),
-              color: determinColorOfNavigationBarItem(_page),
+              size: _determineFontAndIconSizeOfItem(_page, 2),
+              color: _determinColorOfNavigationBarItem(_page),
             ),
           ),
         ],
@@ -105,33 +126,54 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     Container(
                       height: 200.0,
                       margin: EdgeInsets.all(16.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: TextField(
-                          autocorrect: true,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 2.0,
-                                horizontal: 8.0,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Hero(
+                              tag: "title",
+                              child: Text(
+                                "Dictionary",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                ),
                               ),
-                              focusColor: Style.redColor,
-                              hoverColor: Style.redColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Style.redColor,
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "The word goes here..."),
-                        ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: TextField(
+                              autocorrect: true,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: 2.0,
+                                    horizontal: 8.0,
+                                  ),
+                                  focusColor: Style.redColor,
+                                  hoverColor: Style.redColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: Style.redColor,
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  hintText: "The word goes here..."),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(
                       child: Container(
+                        constraints: new BoxConstraints.expand(
+                          height: 400.0,
+                        ),
                         color: Colors.white,
                       ),
                     ),

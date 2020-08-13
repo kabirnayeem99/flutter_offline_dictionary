@@ -13,10 +13,16 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.3
   hive: ^1.4.3
+  hive_flutter: any
+  # For OS-specific directory paths
+  path_provider: any
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: any
+  build_runner: any
 
 flutter:
   uses-material-design: true

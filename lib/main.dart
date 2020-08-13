@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_offline_dictionary/screens/dictionary_screen.dart';
+import 'package:flutter_offline_dictionary/services/hive_helper.dart';
 
 void main() {
+  HiveHelper.hiveInitialise();
   runApp(MyApp());
 }
 
